@@ -18,12 +18,16 @@ var isValid = function (s) {
         for (let i = 0; i < s.length; i++) {
             if (s[i] === '(' || s[i] === '{' || s[i] === '[') {
                 openSymbols.push(s[i])
-            } else if (s[i] === ')' && openSymbols.length !== 0 && openSymbols[openSymbols.length - 1] === '(') {
-                openSymbols.pop(s[i])
-            } else if (s[i] === '}' && openSymbols.length !== 0 && openSymbols[openSymbols.length - 1] === '{') {
-                openSymbols.pop(s[i])
-            } else if (s[i] === ']' && openSymbols.length !== 0 && openSymbols[openSymbols.length - 1] === '[') {
-                openSymbols.pop(s[i])
+            } else if (openSymbols.length > 0) {
+                if (s[i] === ')' && openSymbols[openSymbols.length - 1] === '(') {
+                    openSymbols.pop(s[i])
+                } else if (s[i] === '}' && openSymbols[openSymbols.length - 1] === '{') {
+                    openSymbols.pop(s[i])
+                } else if (s[i] === ']' && openSymbols[openSymbols.length - 1] === '[') {
+                    openSymbols.pop(s[i])
+                }  else {
+                    return false
+                }  
             } else {
                 return false
             }
@@ -32,7 +36,9 @@ var isValid = function (s) {
     }
 };
 
-console.log(isValid('['))
-console.log(isValid('[]([]){}'))
+console.log(isValid('[')) // false
+console.log(isValid('[]([]){}')) // true
+console.log(isValid("([}}])")) // false
+console.log(isValid("))")) // false
 
 
