@@ -1,5 +1,6 @@
 // Do not create a new array
 // Final array must be the same length (k) as original array
+// Answer should be a single number equal to the length of unique elements
 
 // Input: nums = [1,1,2]
 // Output: 2, nums = [1,2,_]
@@ -20,7 +21,7 @@ var removeDuplicates = function (nums) {
             i++;
             nums[i] = nums[j];
             j++;
-        } else j++
+        } else j++;
     }
     return nums;
 };
