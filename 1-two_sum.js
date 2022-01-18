@@ -9,18 +9,17 @@
 // Output: [0,1]
 
 var twoSum = function twoSum(nums, target) {
-    let numObj = {};
-      for (let i = 0; i < nums.length; i++) {
-        let j = target - nums[i];
-        if (numObj[j] !== undefined) {
-          return [numObj[j], i];
-        }
-        numObj[nums[i]] = i;
+  let numObj = {};
+    for (let i = 0; i < nums.length; i++) {
+      let j = target - nums[i];
+      if (numObj[j] !== undefined) {
+        return [numObj[j], i];
       }
+      numObj[nums[i]] = i;
     }
+  }
 
 console.log(twoSum([1,2,4,5,8], 7))
-
 
 // Brute Force Method:
 
