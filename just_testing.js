@@ -23,6 +23,6 @@ flyer.fly(40);
 let numbers = [0,1,2,3,4,5,6]
 console.log(numbers.map(timesTwo))
 
-var timesTwo = (num) => {
-    return num*2;
+var timesThree = (num) => {
+    return num*3;
 }
