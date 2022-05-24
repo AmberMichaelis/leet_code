@@ -15,23 +15,31 @@
  * @param {string} needle
  * @return {number}
  */
-let i = 0;
- var strStr = function(haystack, needle) {
-    if (haystack[i] === needle[0]) {
-        for (let letter = 0; letter < needle.length; letter++) {
-            for (let check = i; check < haystack.length; check++) {
-                if (needle[letter] === haystack[check]) {
+var strStr = function (haystack, needle) {
+    if (needle.length === 0) {
+        return 0
+    } else {
+        // Loop through haystack letters
+        for (let i = 0; i <= haystack.length - needle.length; i++) {
+            // Check if current letter matches first needle letter
+            if (haystack[i] === needle[0]) {
+                // Loop through the needle
+                for (let j = 0; ; j++) {
+                    // Reached the end of the need, thus needle was found fully
+                    if (j === needle.length) {
+                        return i;
+                    }
+                    // Needle letters not found at i
+                    else if (haystack[i + j] !== needle[j]) {
+                        break;
+                    }
                 }
             }
         }
-        return console.log(i)
-    } else if (i < haystack.length - 1) {
-        i++
-        strStr(haystack, needle)
-    } else {
-        return -1
     }
+    return -1;
 };
 
-strStr("hello", "ll");
-strStr("aaaaa", "bba");
+console.log(strStr("hello", "ll"));
+console.log(strStr("aaaaa", "bba"));
+console.log(strStr("aaa", "aaaa"));
