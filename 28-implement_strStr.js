@@ -25,7 +25,7 @@ var strStr = function (haystack, needle) {
             if (haystack[i] === needle[0]) {
                 // Loop through the needle
                 for (let j = 0; ; j++) {
-                    // Reached the end of the need, thus needle was found fully
+                    // Reached the end of the needle, thus needle was found fully
                     if (j === needle.length) {
                         return i;
                     }
