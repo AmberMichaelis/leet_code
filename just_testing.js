@@ -26,5 +26,3 @@ console.log(numbers.map(timesTwo))
 var timesThree = (num) => {
     return num*3;
 }
-
-//Test commit for gpg signature verification
