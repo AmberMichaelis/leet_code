@@ -20,6 +20,13 @@
  * @param {number[]} digits
  * @return {number[]}
  */
- var plusOne = function(digits) {
-    
+var plusOne = function (digits) {
+    let number = digits.join('')
+    number++
+    console.log(number)
+    let newDigitsString = Array.from(String(number))
+    let newDigits = newDigitsString.map(str => Number(str))
+    return newDigits;
 };
+
+console.log(plusOne([1, 2, 3]))
