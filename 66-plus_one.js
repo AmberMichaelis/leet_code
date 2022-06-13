@@ -21,12 +21,31 @@
  * @return {number[]}
  */
 var plusOne = function (digits) {
-    let number = digits.join('')
-    number++
-    console.log(number)
-    let newDigitsString = Array.from(String(number))
-    let newDigits = newDigitsString.map(str => Number(str))
-    return newDigits;
+    let lastDigitIndex = digits.length - 1
+    if (digits[lastDigitIndex] !== 9) {
+        digits[lastDigitIndex]++
+    } else {
+        while (digits[lastDigitIndex] === 9) {
+            digits[lastDigitIndex] = 0
+            lastDigitIndex--
+            if (digits[lastDigitIndex] !== 9) {
+                if (lastDigitIndex === -1) {
+                    digits.unshift(1)
+                } else {
+                    let increment = digits[lastDigitIndex] + 1
+                    digits[lastDigitIndex] = increment
+                    break;
+                }
+            }
+        }
+    }
+    return digits
 };
 
-console.log(plusOne([1, 2, 3]))
+console.log(plusOne([1, 2, 3])) // [1,2,4]
+console.log(plusOne([4, 3, 2, 1])) // [4,3,2,2]
+console.log(plusOne([9])) // [1,0]
+console.log(plusOne([3, 9, 9, 9])) // [4,0,0,0]
+console.log(plusOne([8, 9, 9, 9])) // [9,0,0,0]
+console.log(plusOne([9, 9, 9])) // [1,0,0,0]
+console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3])) // [6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,4]
