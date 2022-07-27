@@ -7,34 +7,85 @@ class Node {
 
 // module.exports = 
 class LinkedList {
-    constructor() {
+    constructor(array) {
         this.head = null;
         this.size = 0;
+
+        if (!array) {
+            return;
+        } else {
+            let list = new LinkedList();
+            for (let i = array.length - 1; i >= 0; i--) {
+                list.addFirst(array[i]);
+            }
+            return list;
+        }
     }
 
     addFirst(value) {
-        this.head = new Node(value, this.head);
-        this.size++;
+        if (value instanceof Array) {
+            this.#addArrayFirst(value);
+        } else {
+            this.head = new Node(value, this.head);
+            this.size++;
+        }
+        return this;
+    }
+
+    #addArrayFirst(array) {
+        for (let i = array.length - 1; i >= 0; i--) {
+            this.head = new Node(array[i], this.head);
+            this.size++
+        }
+        return this;
     }
 
     addLast(value) {
-        let newNode = new Node(value)
         let current = this.head;
-        if (current === null) {
-            this.head = newNode;
+        if (value instanceof Array) {
+            this.#addArrayLast(value);
         } else {
-            while (current.next != null) {
-                current = current.next;
+            let newNode = new Node(value)
+            if (current === null) {
+                this.head = newNode;
+            } else {
+                while (current.next != null) {
+                    current = current.next;
+                }
+                current.next = newNode;
             }
-            current.next = newNode;
+            this.size++
         }
-        this.size++
+        return this;
+    }
+
+    #addArrayLast(array) {
+        for (let i = 0; i < array.length; i++) {
+            let current = this.head;
+            let newNode = new Node(array[i])
+            if (current === null) {
+                this.head = newNode;
+            } else {
+                while (current.next != null) {
+                    current = current.next;
+                }
+                current.next = newNode;
+            }
+            this.size++
+        }
+        return this;
     }
 
     addAtIndex(value, index) {
-        if (index < 0 || index > this.size) return;
+        if (index < 0 || index > this.size) {
+            throw new Error(`Index must be between 0 and ${this.size}`);
+        };
         if (index === 0) {
             this.addFirst(value);
+        } else if (index === this.size) {
+            this.addLast(value);
+        } else if (value instanceof Array) {
+            this.#addArrayAtIndex(value, index)
         } else {
             let newNode = new Node(value)
             let previousNode;
@@ -47,8 +98,30 @@ class LinkedList {
             }
             newNode.next = nextNode;
             previousNode.next = newNode;
+            this.size++
         }
-        this.size++
+        return this;
+    }
+
+    #addArrayAtIndex(array, index) {
+        let previousNode; // Node that goes before array
+        let nextNode = this.head; // Node that goes after
+        let counter = 0;
+        // Loop through nodes until nextNode is at index
+        while (counter < index) {
+            previousNode = nextNode;
+            nextNode = previousNode.next;
+            counter++
+        }
+        // Point previousNode to first array element
+        for (let i = 0; i < array.length; i++) {
+            let newNode = new Node(array[i])
+            newNode.next = nextNode;
+            previousNode.next = newNode;
+            previousNode = newNode;
+            this.size++
+        }
+        return this;
     }
 
     getAtIndex(index) {
@@ -117,19 +190,8 @@ class LinkedList {
         }
     }
 
-    buildFromArray(array) {
-        let tail, eachNode;
-        for (let i = array.length - 1; i >= 0; i--) {
-            if (!tail) {
-                tail = new Node(array[i]);
-                console.log('inside')
-            }
-            console.log(array[i])
-        }
-    }
-
     print() {
-        if (this.head == null) {
+        if (!this.head) {
             return 'List is empty'
         } else {
             let current = this.head;
@@ -142,14 +204,17 @@ class LinkedList {
             return printedList
         }
     }
-}
+
+};
+
 
 let list = new LinkedList();
-list.buildFromArray([1, 2, 3]);
-// list.addFirst(35);
+
 // list.addFirst(15);
+// list.addLast(35);
 // list.addFirst(5);
+// list.addAtIndex([1, 2, 3], 2);
 // list.addLast(45);
-// list.addAtIndex(25, 2);
+// list.addAtIndex(25, 3);
 // console.log(list.removeAtIndex(4));
 // console.log(list.print());
