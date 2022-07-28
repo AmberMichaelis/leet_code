@@ -46,10 +46,10 @@ class LinkedList {
             this.#addArrayLast(value);
         } else {
             let newNode = new Node(value)
-            if (current === null) {
+            if (!current) {
                 this.head = newNode;
             } else {
-                while (current.next != null) {
+                while (current.next) {
                     current = current.next;
                 }
                 current.next = newNode;
@@ -190,6 +190,27 @@ class LinkedList {
         }
     }
 
+    deleteDuplicates() {
+        // sets current node to be head; of list
+        let current = this.head;
+        // runs until we are at the end of the list
+        while (current !== null && current.next !== null) {
+            // checks to see if the current value and the next value are the same
+            if (current.value === current.next.value) {
+                // skips over the duplicate and the next value becomes 2x next
+                current.next = current.next.next
+                this.size--;
+                // current value and the next value are not the same
+            } else {
+                // moves to the next node on the list to run through the while again
+                current = current.next
+            }
+
+        }
+        // returns the linked list with no duplicates
+        return this;
+    };
+
     print() {
         if (!this.head) {
             return 'List is empty'
@@ -205,11 +226,50 @@ class LinkedList {
         }
     }
 
+    mergeTwoLists(list1, list2) {
+        let previousNode; // Node to go before inserted node
+        let nextNode = list1.head; // Node to go after inserted node
+        let insertNode = list2.head; // Node to be inserted from list2 into list1
+        while (insertNode) {
+            console.log('here')
+            if (!nextNode.next) {
+                while (insertNode) {
+                    nextNode.next = insertNode;
+                    insertNode = insertNode.next;
+                    this.size++;
+                }
+            } else {
+                // Loop through list1 until you find insert index
+                while (nextNode.value < insertNode.value) {
+                    previousNode = nextNode;
+                    nextNode = nextNode.next;
+                }
+                // Save next node in list 2
+                let nextInsertNode = insertNode.next
+                // Insert node becomes head of list1
+                if (!previousNode) {
+                    list1.addFirst(insertNode.value);
+                } else {
+                    // Point previousNode node in list1 to inserted node from list2
+                    previousNode.next = insertNode;
+                    // Point inserted node to next node in list1
+                    insertNode.next = nextNode;
+                    // Inserted node is now previousNode node
+                    previousNode = insertNode;
+                    this.size++;
+                }
+                // Look at next node in list2
+                insertNode = nextInsertNode;
+            }
+        }
+        return list1;
+    };
 };
 
-
-let list = new LinkedList();
-
+let list1 = new LinkedList([1, 2, 4]);
+let list2 = new LinkedList([0, 1, 2]);
+list1.mergeTwoLists(list1, list2)
+console.log(list1.print())
 // list.addFirst(15);
 // list.addLast(35);
 // list.addFirst(5);
