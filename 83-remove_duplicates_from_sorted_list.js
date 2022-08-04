@@ -17,24 +17,43 @@
  * 
  */
 
+const SinglyLinkedList = require('./singly_linked_list');
+
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
- var deleteDuplicates = function(head) {
+var deleteDuplicates = function (head) {
     if (!head || !head.next) return head;
     let current = head;
     let fast;
-    while(current) {
+    while (current) {
         fast = current;
-        while(fast && current.val == fast.val) {
+        while (fast && current.val == fast.val) {
             fast = fast.next;
         }
         current.next = fast;
         current = fast;
     }
-    
+
 };
 
-let list = new ListNode(1,1)
-console.log(list)
+// Example 1
+let list1 = new SinglyLinkedList([1, 1, 2]);
+list1.deleteDuplicates();
+console.log(list1.print());
+
+// Example 2
+let list2 = new SinglyLinkedList([1, 1, 2, 3, 3]);
+list2.deleteDuplicates();
+console.log(list2.print());
+
+
+// list.addFirst(15);
+// list.addLast(35);
+// list.addFirst(5);
+// list.addAtIndex([1, 2, 3], 2);
+// list.addLast(45);
+// list.addAtIndex(25, 3);
+// console.log(list.removeAtIndex(4));
+// console.log(list.print());

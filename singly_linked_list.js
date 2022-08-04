@@ -6,7 +6,7 @@ class Node {
 }
 
 // module.exports = 
-class LinkedList {
+class SinglyLinkedList {
     constructor(array) {
         this.head = null;
         this.size = 0;
@@ -14,7 +14,7 @@ class LinkedList {
         if (!array) {
             return;
         } else {
-            let list = new LinkedList();
+            let list = new SinglyLinkedList();
             for (let i = array.length - 1; i >= 0; i--) {
                 list.addFirst(array[i]);
             }
@@ -211,6 +211,45 @@ class LinkedList {
         return this;
     };
 
+    mergeTwoLists(l1, l2) {
+        if (!l1 || l1.size === 0) return l2;
+        if (!l2 || l2.size === 0) return l1;
+
+        list1 = l1.head.value <= l2.head.value ? l1 : l2;
+        list2 = list1 === l1 ? l2 : l1;
+        let index = 0;
+        let previousNode; // Node to go before insert
+        let nextNode = list1.head; // Node to go after insert
+        let insertNode = list2.head; // Node to be inserted from list2 into list1
+
+        if (!previousNode && insertNode.value === nextNode.value) {
+            let nextInsertNode = insertNode.next;
+            insertNode.next = nextNode;
+            list1.head = insertNode;
+            list1.size++;
+            list2.size++;
+            previousNode = insertNode;
+            insertNode = nextInsertNode;
+            index++;
+        }
+        
+        while (insertNode) {
+            let nextInsertNode = insertNode.next;
+            while (nextNode && nextNode.value < insertNode.value) {
+                previousNode = nextNode;
+                nextNode = nextNode.next;
+                index++;
+            }
+            list1 = list1.addAtIndex(insertNode.value, index);
+            list2.size++;
+            previousNode = previousNode.next;
+            insertNode = nextInsertNode;
+            index++;
+
+        }
+        return list1;
+    };
+
     print() {
         if (!this.head) {
             return 'List is empty'
@@ -225,56 +264,16 @@ class LinkedList {
             return printedList
         }
     }
-
-    mergeTwoLists(list1, list2) {
-        let previousNode; // Node to go before inserted node
-        let nextNode = list1.head; // Node to go after inserted node
-        let insertNode = list2.head; // Node to be inserted from list2 into list1
-        while (insertNode) {
-            console.log('here')
-            if (!nextNode.next) {
-                while (insertNode) {
-                    nextNode.next = insertNode;
-                    insertNode = insertNode.next;
-                    this.size++;
-                }
-            } else {
-                // Loop through list1 until you find insert index
-                while (nextNode.value < insertNode.value) {
-                    previousNode = nextNode;
-                    nextNode = nextNode.next;
-                }
-                // Save next node in list 2
-                let nextInsertNode = insertNode.next
-                // Insert node becomes head of list1
-                if (!previousNode) {
-                    list1.addFirst(insertNode.value);
-                } else {
-                    // Point previousNode node in list1 to inserted node from list2
-                    previousNode.next = insertNode;
-                    // Point inserted node to next node in list1
-                    insertNode.next = nextNode;
-                    // Inserted node is now previousNode node
-                    previousNode = insertNode;
-                    this.size++;
-                }
-                // Look at next node in list2
-                insertNode = nextInsertNode;
-            }
-        }
-        return list1;
-    };
 };
 
-let list1 = new LinkedList([1, 2, 4]);
-let list2 = new LinkedList([0, 1, 2]);
+let list1 = new SinglyLinkedList([]);
+let list2 = new SinglyLinkedList([]);
+list1.addAtIndex(1,0)
+list1.addAtIndex(3,1)
+list1.addAtIndex(5,2)
+list2.addAtIndex(1,0)
+list2.addAtIndex(2,1)
+list2.addAtIndex(4,2)
 list1.mergeTwoLists(list1, list2)
-console.log(list1.print())
-// list.addFirst(15);
-// list.addLast(35);
-// list.addFirst(5);
-// list.addAtIndex([1, 2, 3], 2);
-// list.addLast(45);
-// list.addAtIndex(25, 3);
-// console.log(list.removeAtIndex(4));
-// console.log(list.print());
+console.log(list1.print());
+console.log(list2.print());
