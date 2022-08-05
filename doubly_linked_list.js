@@ -49,6 +49,83 @@ class DoublyLinkedList {
         return this.head;
     }
 
+    addAtIndex(value, index) {
+        if (index < 0 || index > this.size) {
+            throw new Error(`Index must be between 0 and ${this.size}`)
+        } else if (index === 0) {
+            this.addFirst(value);
+        } else if (index === this.size) {
+            this.addLast(value);
+        } else {
+            let newNode = new Node(value);
+            let counter = 0;
+            let nextNode = this.head; // node to go after inserted node
+            while (nextNode && counter < index) {
+                nextNode = nextNode.next;
+                counter++;
+            }
+            let previousNode = nextNode.previous // node to go before inserted node
+            newNode.next = nextNode;
+            previousNode.next = newNode;
+            newNode.previous = previousNode;
+            nextNode.previous = newNode
+            this.size++;
+        }
+        return this.head;
+    }
+
+    removeFirst() {
+        let firstNode = this.head;
+        let secondNode = firstNode.next;
+        let thirdNode = secondNode.next;
+        // Put second node's value into head
+        firstNode.value = secondNode.value;
+        // Point head node next to third node
+        firstNode.next = thirdNode;
+        // Point third node previous to head
+        thirdNode.previous = firstNode;
+        this.size--;
+        return firstNode;
+    }
+
+    removeLast() {
+        let firstNode = this.head;
+        let lastNode = firstNode.previous;
+        let secondFromLastNode = lastNode.previous;
+        let thirdFromLastNode = secondFromLastNode.previous;
+        // Put second from last node's value into last node
+        lastNode.value = secondFromLastNode.value;
+        // Point third from last node to last node
+        thirdFromLastNode.next = lastNode;
+        // Point last node previous to third from last node
+        lastNode.previous = thirdFromLastNode;
+        this.size--;
+        return firstNode;
+    }
+
+    removeAtIndex(index) {
+        if (index < 0 || index > this.size) {
+            throw new Error(`Index must be between 0 and ${this.size}`)
+        } else if (index === 0) {
+            this.removeFirst();
+        } else if (index === this.size) {
+            this.removeLast();
+        } else {
+            let removeNode = this.head; // node to be removed
+            let counter = 0;
+            while (removeNode && counter < index) {
+                removeNode = removeNode.next;
+                counter++;
+            }
+            let nextNode = removeNode.next; // node after removed node
+            let previousNode = removeNode.previous // node before removed node
+            previousNode.next = nextNode;
+            nextNode.previous = previousNode;
+            this.size--;
+        }
+        return this.head;
+    }
+
     print() {
         let current = this.head;
         let printedList = `${current.value}`
@@ -56,12 +133,14 @@ class DoublyLinkedList {
             current = current.next;
             printedList += ` -> ${current.value}`;
         }
+        printedList += ` | Size: ${this.size}`
         return console.log(printedList);
     }
 
     printDetails() {
         let current = this.head;
         let index = 0;
+        console.log(`Size: ${this.size}`)
         console.log(`node: ${index} | value: ${current.value} | previous: ${current.previous.value} | next: ${current.next.value}`)
         while (current.next !== this.head) {
             current = current.next;
@@ -72,8 +151,11 @@ class DoublyLinkedList {
 }
 
 let list = new DoublyLinkedList();
-list.addFirst(5);
-list.addFirst(10);
+list.addFirst(30);
+list.addFirst(20);
 list.addFirst(15);
+list.addFirst(10);
+list.addAtIndex(25, 3);
+list.addFirst(5);
 list.print()
 list.printDetails();
