@@ -76,15 +76,22 @@ class DoublyLinkedList {
 
     removeFirst() {
         let firstNode = this.head;
-        let secondNode = firstNode.next;
-        let thirdNode = secondNode.next;
-        // Put second node's value into head
-        firstNode.value = secondNode.value;
-        // Point head node next to third node
-        firstNode.next = thirdNode;
-        // Point third node previous to head
-        thirdNode.previous = firstNode;
-        this.size--;
+        if (!firstNode.next) {
+            firstNode.next = null;
+            firstNode.previous = null;
+            this.head = null;
+            this.size = 0;
+        } else {
+            let secondNode = firstNode.next;
+            let thirdNode = secondNode.next;
+            // Put second node's value into head
+            firstNode.value = secondNode.value;
+            // Point head node next to third node
+            firstNode.next = thirdNode;
+            // Point third node previous to head
+            thirdNode.previous = firstNode;
+            this.size--;
+        }
         return firstNode;
     }
 
@@ -126,26 +133,54 @@ class DoublyLinkedList {
         return this.head;
     }
 
+    clear() {
+        if (!this.head) {
+            return this.head;
+        } else if (this.size === 1) {
+            this.removeFirst();
+        } else {
+            let current = this.head;
+            this.print()
+            while (current) {
+                current = current.next;
+                this.removeFirst();
+                this.print()
+            }
+            this.removeFirst();
+            return this.head;
+        }
+    }
+
     print() {
+        if (!this.head) {
+            return;
+        } else {
         let current = this.head;
         let printedList = `${current.value}`
-        while (current.next !== this.head) {
+        while (current.next && current.next !== this.head) {
             current = current.next;
             printedList += ` -> ${current.value}`;
         }
         printedList += ` | Size: ${this.size}`
         return console.log(printedList);
     }
+    }
 
     printDetails() {
         let current = this.head;
-        let index = 0;
-        console.log(`Size: ${this.size}`)
-        console.log(`node: ${index} | value: ${current.value} | previous: ${current.previous.value} | next: ${current.next.value}`)
-        while (current.next !== this.head) {
-            current = current.next;
-            index++
+        if (!current) {
+            return;
+        } else if (!current.next) {
+            console.log(`head value: ${current.value} | Size: ${this.size}`)
+        } else {
+            let index = 0;
+            console.log(`Size: ${this.size}`)
             console.log(`node: ${index} | value: ${current.value} | previous: ${current.previous.value} | next: ${current.next.value}`)
+            while (current.next !== this.head) {
+                current = current.next;
+                index++
+                console.log(`node: ${index} | value: ${current.value} | previous: ${current.previous.value} | next: ${current.next.value}`)
+            }
         }
     }
 }
@@ -154,8 +189,9 @@ let list = new DoublyLinkedList();
 list.addFirst(30);
 list.addFirst(20);
 list.addFirst(15);
-list.addFirst(10);
-list.addAtIndex(25, 3);
-list.addFirst(5);
-list.print()
-list.printDetails();
+// list.addFirst(10);
+// list.addAtIndex(25, 3);
+// list.addFirst(5);
+list.clear();
+list.print();
+// list.printDetails();
