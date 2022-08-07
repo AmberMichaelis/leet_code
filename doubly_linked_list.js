@@ -76,9 +76,10 @@ class DoublyLinkedList {
 
     removeFirst() {
         let firstNode = this.head;
-        if (!firstNode.next) {
-            firstNode.next = null;
-            firstNode.previous = null;
+        if (!firstNode) {
+            return;
+        } else if (firstNode.next = firstNode) {
+            this.head.next = null;
             this.head = null;
             this.size = 0;
         } else {
@@ -135,24 +136,23 @@ class DoublyLinkedList {
 
     clear() {
         if (!this.head) {
-            return this.head;
         } else if (this.size === 1) {
             this.removeFirst();
         } else {
             let current = this.head;
-            this.print()
             while (current) {
                 current = current.next;
                 this.removeFirst();
-                this.print()
             }
             this.removeFirst();
-            return this.head;
         }
+        console.log(`List cleared | Size: ${this.size}`);
+        return this.head;
     }
 
     print() {
         if (!this.head) {
+            console.log('List is empty');
             return;
         } else {
         let current = this.head;
@@ -189,9 +189,11 @@ let list = new DoublyLinkedList();
 list.addFirst(30);
 list.addFirst(20);
 list.addFirst(15);
+list.print();
 // list.addFirst(10);
 // list.addAtIndex(25, 3);
 // list.addFirst(5);
+// list.removeFirst();
 list.clear();
 list.print();
 // list.printDetails();
