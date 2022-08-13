@@ -42,18 +42,30 @@
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
 var merge = function (nums1, m, nums2, n) {
-    let i = 0; // index for nums1
-    let j = 0; // index for nums2
-    while (j < nums2.length) {
-        while (nums2[j] > nums1[i] && nums1[i] !== 0) {
-            console.log(`nums2[j]: ${nums2[j]} | nums1[i]: ${nums1[i]} | i: ${i}`);
+    let i = 0; // index for nums2
+    let j = m; // index for nums1 starts where 0's start in nums2
+    while (i < nums2.length) {
+        // Replace 0's in nums1 with values from nums2
+        while (nums1[j] === 0 && nums2[i]) {
+            nums1[j] = nums2[i];
+            j++;
             i++;
         }
-        nums1[i] = nums2[j];
-        console.log(`nums1 added: ${nums1}`)
-        j++
+    }
+    i = 0; // reset index i
+    j = m; // reset index j to where nums2 values start
+    console.log(`unsorted array: ${nums1} | nums1[j]: ${nums1[j]}`)
+    while (j < nums1.length) {
+        if (nums1[j] < nums1[i]) {
+            [nums1[i], nums1[j]] = [nums1[j], nums1[i]];
+            i++;
+        } else {
+            j++
+        }
     }
     return nums1;
 };
 
-console.log(merge([1, 2, 3, 0], 3, [4], 1))
+console.log(merge([2, 3, 5, 0], 3, [1], 1)); // [2, 3, 5, 1]
+console.log(merge([2, 3, 5, 0, 0], 3, [1, 4], 2)); // [2, 3, 5, 1, 4]
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3)); // [1, 2, 2, 3, 5, 6]
