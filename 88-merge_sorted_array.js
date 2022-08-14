@@ -42,30 +42,28 @@
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
 var merge = function (nums1, m, nums2, n) {
-    let i = 0; // index for nums2
-    let j = m; // index for nums1 starts where 0's start in nums2
-    while (i < nums2.length) {
-        // Replace 0's in nums1 with values from nums2
-        while (nums1[j] === 0 && nums2[i]) {
-            nums1[j] = nums2[i];
-            j++;
-            i++;
-        }
+    var frontIndex = m - 1; // 2
+    var nums2Index = n - 1; // 0
+    var backIndex = m + n - 1; // 3
+    while (nums2Index >= 0) {
+        nums1[backIndex--] = frontIndex >= 0 && nums1[frontIndex] > nums2[nums2Index] ? nums1[frontIndex--] : nums2[nums2Index--];
     }
-    i = 0; // reset index i
-    j = m; // reset index j to where nums2 values start
-    console.log(`unsorted array: ${nums1} | nums1[j]: ${nums1[j]}`)
-    while (j < nums1.length) {
-        if (nums1[j] < nums1[i]) {
-            [nums1[i], nums1[j]] = [nums1[j], nums1[i]];
-            i++;
-        } else {
-            j++
-        }
-    }
-    return nums1;
+    // console.log(nums1);
 };
 
-console.log(merge([2, 3, 5, 0], 3, [1], 1)); // [2, 3, 5, 1]
-console.log(merge([2, 3, 5, 0, 0], 3, [1, 4], 2)); // [2, 3, 5, 1, 4]
-console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3)); // [1, 2, 2, 3, 5, 6]
+merge([2, 3, 5, 0], 3, [1], 1); // [2, 3, 5, 1]
+merge([2, 3, 5, 0, 0], 3, [1, 4], 2); // [2, 3, 5, 1, 4]
+merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3); // [1, 2, 2, 3, 5, 6]
+
+/* Explanation:
+ * For each of the values in nums2...
+ * If value in frontIndex is bigger than value in nums2Index, 
+ * then copy the frontIndex value into the backIndex and increament both indicies.
+ * Else copy the nums2Index value into the backIndex and increament both indicies.
+ * 
+ * Three pointers. 
+ * backIndex points to the last index in nums1 (zero).
+ * Moving backwards in nums1 and nums2,
+ * Compare the values in nums1 and nums2 and copy the highest value into backIndex
+ * 
+ */
