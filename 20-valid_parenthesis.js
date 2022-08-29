@@ -28,7 +28,7 @@
  */
 
 var isValid = function (s) {
-    if (s.length % 2 !== 0 ){
+    if (s.length % 2 !== 0) {
         return false
     } else {
         let openSymbols = []
@@ -42,9 +42,9 @@ var isValid = function (s) {
                     openSymbols.pop(s[i])
                 } else if (s[i] === ']' && openSymbols[openSymbols.length - 1] === '[') {
                     openSymbols.pop(s[i])
-                }  else {
+                } else {
                     return false
-                }  
+                }
             } else {
                 return false
             }
@@ -57,5 +57,3 @@ console.log(isValid('[')) // false
 console.log(isValid('[]([]){}')) // true
 console.log(isValid("([}}])")) // false
 console.log(isValid("))")) // false
-
-
