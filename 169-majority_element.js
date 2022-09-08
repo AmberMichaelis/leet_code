@@ -34,3 +34,20 @@ var majorityElement = function (nums) {
 
 console.log(majorityElement([3, 2, 3])); // 3
 console.log(majorityElement([2, 2, 1, 1, 1, 2, 2])); // 2
+
+/* Explanation:
+ *
+ * Create an empty object called list.
+ *
+ * For each number in the nums array,
+ * if the number is already a key in list,
+ * add 1 to that key's value.
+ * If the number is not already a key in list,
+ * add the number as a new key and initialize that key's value to 1.
+ * 
+ * Create an array with all the values in list.
+ * Find the index of the highest value in the array, called majorityIndex.
+ * Create an array with all the keys in list.
+ * 
+ * Return the key that has the highest value using majorityIndex.
+ */
