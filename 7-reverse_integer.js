@@ -24,6 +24,14 @@
  * @param {number} x
  * @return {number}
  */
-var reverse = function (x) {
-
-};
+ const reverse = n => {
+    const str = "" + Math.abs(n);      // convert absolute value to string
+    const reversed = str.split("")     // get array of digit characters
+                        .reverse()     // reverse it
+                        .join("");     // join into string again;
+    const num = +reversed;             // convert integer
+    if (num < Math.pow(-2, 31) ||      // check for 32-bit integer
+        num > Math.pow(2, 31) - 1) 
+        return 0;
+    return (n < 0 ? -1 : 1) * num;     // multiple by -1 if needed
+  }
