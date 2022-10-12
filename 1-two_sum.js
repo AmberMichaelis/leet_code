@@ -20,6 +20,7 @@ var twoSum = function twoSum(nums, target) {
   let numObj = {};
   for (let i = 0; i < nums.length; i++) {
     let neededNum = target - nums[i];
+    console.log(numObj);
     if (numObj[neededNum] !== undefined) {
       return [numObj[neededNum], i];
     }
@@ -27,18 +28,8 @@ var twoSum = function twoSum(nums, target) {
   }
 }
 
-console.log(twoSum([2,7,11,15], 9)) // [0, 1]
-console.log(twoSum([3,2,4], 6)) // [1, 2]
-console.log(twoSum([3,3], 6)) // [0, 1]
-
-// Brute Force Method:
-
-// var twoSum = function(nums, target) {
-//     for (let i = 0; i < nums.length; i++) {
-//         for (let k = i; k < nums.length; k++) {
-//             if (nums[i] + nums[k] === target) {
-//                 return [i, k]
-//             }
-//         }
-//     }
-// };
+/* Explanation:
+ * Store elements in nums in a new object. For the key-value pairs use each element and its index.
+ * While you're going through nums, find the difference between the target and the current element.
+ * If that difference is already saved as a key, return it's value (aka it's index in nums), and the current index.
+ */
