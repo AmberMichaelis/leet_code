@@ -33,3 +33,11 @@ var isPalindrome = function (x) {
   }
   return true;
 };
+
+/* Explanation:
+ * Convert x to a string.
+ * Initialize two pointers, one at the beginning of the string and one at the end of the string.
+ * Increment the pointers toward the middle of the string.
+ * If the two pointers point to different values, return false.
+ * Otherwise, after traversing the whole string, return true.
+ */
