@@ -35,47 +35,47 @@
  * It is guaranteed that s is a valid roman numeral in the range [1, 3999].
  */
 
- /**
- * @param {string} s
- * @return {number}
- */
+/**
+* @param {string} s
+* @return {number}
+*/
 
-const romanLetters = ['I', 'V', 'X', 'L', 'C', 'D', 'M']
-const romanValues = [1, 5, 10, 50, 100, 500, 1000]
-
+const romanLetters = {
+    "I": 1,
+    "V": 5,
+    "X": 10,
+    "L": 50,
+    "C": 100,
+    "D": 500,
+    "M": 1000
+}
 
 var romanToInt = function (s) {
-    var number = 0
-    var array = s.split('');
-    var newArray = []
-        
-        // converts s into array with values equivalent to roman numeral values
-        for (let index in array)   {
-            for (let each in romanLetters) {
-                if (array[index] === romanLetters[each]) {
-                    newArray.push(romanValues[each])
-                }
-            }
-        }
+    let sum = 0;
 
-
-        for (let i = 0; i < newArray.length; i++) {
-            let currentLetter = newArray[i];
-            let nextLetter = newArray[i + 1];
-            
-            if (currentLetter >= nextLetter || nextLetter == undefined) {
-                number += currentLetter
+    for (let i = 0; i < s.length; i++) {
+        let currentLetter = s[i]
+        let nextLetter = s[i + 1]
+        let currentValue = romanLetters[currentLetter]
+        let nextValue = romanLetters[nextLetter]
+        if (currentValue !== undefined) {
+            if (currentValue >= nextValue || nextValue === undefined) {
+                sum += currentValue;
             } else {
-                number -= currentLetter
+                sum -= currentValue;
             }
         }
-        return number
-};
+    }
+    return sum;
+}
 
-console.log(romanToInt('LVIIIX'))
-console.log(romanToInt("I"))
-console.log(romanToInt("IV"))
-console.log(romanToInt("IX"))
-console.log(romanToInt("X"))
-console.log(romanToInt("LVIII"))
-console.log(romanToInt("MCMXCI"))
+/* Explanation:
+ * Create an object with the roman numeral letters and their values.
+ * Loop through string s and make variables for the current letter, its value, the next letter, and its value.
+ * Make sure the current value exists in the romanLetters object.
+ * Compare the current value with the next value. 
+ * If the current value is greater than or equal to the next value, or the next value is undefinded (because you're at the end of s), 
+ * add the value to sum.
+ * Otherwise, subtract the value from sum.
+ * After looping through all of s, return the sum.
+ */
