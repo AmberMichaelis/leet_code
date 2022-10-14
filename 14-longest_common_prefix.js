@@ -14,26 +14,26 @@
  * 1 <= strs.length <= 20
  * 0 <= strs[i].length <= 20
  * strs[i] consists of only lowercase English letters.
- */ 
+ */
 
 /**
  * @param {string[]} strs
  * @return {string}
  */
 var longestCommonPrefix = function (strs) {
-    let prefix = []
-
     if (strs.length === 1) return strs.join('');
 
-    for (let i = 0; i < strs.length; i++) {
-        let firstWord = strs[i];
-        if (i === 0) {
-            prefix = firstWord.split('');
+    let prefix = []
+    for (let index = 0; index < strs.length; index++) {
+        let currentWord = strs[index];
+        if (index === 0) {
+            prefix = currentWord.split('');
         } else {
-            prefix = prefix.slice(0, firstWord.length);
-            for (let char = 0; char < firstWord.length; char++) {
-                if (firstWord[char] !== prefix[char]) {
+            prefix = prefix.slice(0, currentWord.length);
+            for (let char = 0; char < currentWord.length; char++) {
+                if (currentWord[char] !== prefix[char]) {
                     prefix = prefix.slice(0, char);
+                    break;
                 }
             }
         }
@@ -41,10 +41,15 @@ var longestCommonPrefix = function (strs) {
     return prefix.join('');
 };
 
-console.log(longestCommonPrefix(["flower", "flow", "flight"]));
-console.log(longestCommonPrefix(["dog", "racecar", "car"]));
-console.log(longestCommonPrefix(["amber", "ambergi", "amberger"]));
-console.log(longestCommonPrefix(["marcin"]));
-console.log(longestCommonPrefix(["a", "a", "b"]));
-console.log(longestCommonPrefix(["abab", "aba", ""]));
-console.log(longestCommonPrefix(["abab", "aba", "abc"]));
+/* Explanation:
+ * If there is only one word in strs, return it as a string.
+ * Create an empty array variable called prefix.
+ * Loop through all the words in strs.
+ * Create a variable for the current word.
+ * If it's the first word in strs, split the letters into the prefix array.
+ * Otherwise, shorten prefix array to be the same length as the current word.
+ * Loop through each of the letters in the current word.
+ * When the letter in the current word doesn't match the letter in the prefix array,
+ * remove the extra letters in the previous array, and break out of the loop to move to the next word.
+ * After looping through all of the words in strs, return prefix as a string.
+ */
