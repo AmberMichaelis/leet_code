@@ -26,34 +26,40 @@
  * 1 <= s.length <= 104
  * s consists of parentheses only '()[]{}'.
  */
+var parList = {
+    '(': ')',
+    '{': '}',
+    '[': ']'
+}
 
 var isValid = function (s) {
-    if (s.length % 2 !== 0) {
-        return false
-    } else {
-        let openSymbols = []
-        for (let i = 0; i < s.length; i++) {
-            if (s[i] === '(' || s[i] === '{' || s[i] === '[') {
-                openSymbols.push(s[i])
-            } else if (openSymbols.length > 0) {
-                if (s[i] === ')' && openSymbols[openSymbols.length - 1] === '(') {
-                    openSymbols.pop(s[i])
-                } else if (s[i] === '}' && openSymbols[openSymbols.length - 1] === '{') {
-                    openSymbols.pop(s[i])
-                } else if (s[i] === ']' && openSymbols[openSymbols.length - 1] === '[') {
-                    openSymbols.pop(s[i])
-                } else {
-                    return false
-                }
+    if (s.length % 2) return false
+    let closers = []
+    for (let i = 0; i < s.length; i++) {
+        let inputPar = s[i]
+        if (parList[inputPar] !== undefined) {
+            closers.push(parList[inputPar])
+        } else {
+            if (inputPar === closers[closers.length - 1]) {
+                closers.pop()
             } else {
                 return false
             }
         }
-        return (openSymbols.length === 0)
     }
+    return closers.length === 0;
 };
 
-console.log(isValid('[')) // false
-console.log(isValid('[]([]){}')) // true
-console.log(isValid("([}}])")) // false
-console.log(isValid("))")) // false
+/* Explanation:
+ * Create an object with open parenthesis as the keys and closing parenthesis as the values, parList.
+ * If there is an odd number of parenthesis in s, return false.
+ * Create an empty array, closers.
+ * Loop through s.
+ * Set the current parenthesis equal to a variable, inputPar.
+ * Check if inputPar is an open bracket by seeing if its value exists in parList.
+ * If so, push the value (the closing bracket) into the closers array.
+ * Otherwise, it is a closing bracket, so check if it matches the last closing bracket pushed into the closers array.
+ * If so, remove it from the closers array.
+ * Otherwise, return false.
+ * After looping through all of s, return whether or not the closers array has a length of 0.
+ */
