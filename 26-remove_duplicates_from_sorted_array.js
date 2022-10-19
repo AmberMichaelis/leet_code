@@ -1,30 +1,61 @@
-// Do not create a new array
-// Final array must be the same length (k) as original array
-// Answer should be a single number equal to the length of unique elements
-
-// Input: nums = [1,1,2]
-// Output: 2, nums = [1,2,_]
-// Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
-// It does not matter what you leave beyond the returned k (hence they are underscores).
-
-// Input: nums = [0,0,1,1,1,2,2,3,3,4]
-// Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
-// Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
-// It does not matter what you leave beyond the returned k (hence they are underscores).
+/* Given an integer array nums sorted in non-decreasing order, 
+ * remove the duplicates in-place such that each unique element appears only once. 
+ * The relative order of the elements should be kept the same.
+ * 
+ * Since it is impossible to change the length of the array in some languages, 
+ * you must instead have the result be placed in the first part of the array nums. 
+ * More formally, if there are k elements after removing the duplicates, 
+ * then the first k elements of nums should hold the final result. 
+ * It does not matter what you leave beyond the first k elements.
+ * 
+ * Return k after placing the final result in the first k slots of nums.
+ * 
+ * Do not allocate extra space for another array. 
+ * You must do this by modifying the input array in-place with O(1) extra memory.
+ * 
+ * Example 1: 
+ * Input: nums = [1,1,2]
+ * Output: 2, nums = [1,2,_]
+ * Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+ * It does not matter what you leave beyond the returned k (hence they are underscores).
+ * 
+ * Example 2:
+ * Input: nums = [0,0,1,1,1,2,2,3,3,4]
+ * Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+ * Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+ * It does not matter what you leave beyond the returned k (hence they are underscores).
+ * 
+ * Constraints:
+ * 
+ * 1 <= nums.length <= 3 * 10^4
+ * -100 <= nums[i] <= 100
+ * nums is sorted in non-decreasing order.
+ */
 
 var removeDuplicates = function (nums) {
-    if (nums.length === 0 ) return 0;
-    let i = 0;
-    let j = 1;
-    while (j < nums.length) {
-        if (nums[j] !== nums[i]) {
-            i++;
-            nums[i] = nums[j];
-            j++;
-        } else j++;
+    if (nums.length === 0) return 0;
+    let first = 0;
+    let second = 1;
+    while (second < nums.length) {
+        if (nums[second] !== nums[first]) {
+            first++;
+            nums[first] = nums[second];
+            second++;
+        } else {
+            second++;
+        }
     }
-    return nums;
+    return first + 1;
 };
 
-console.log(removeDuplicates([1,1,2]), 'answer');
-console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]), 'answer');
+/* Explanation:
+ * If nums is empty, return 0.
+ * Create two pointers, first equal to 0 and second equal to 1.
+ * Loop through nums while second is less than nums.length.
+ * If second is not equal to first,
+ * increament first,
+ * set first equal to second
+ * and then increament second.
+ * Otherwise, just increament second.
+ * After second has gone through all of nums, return the number of unique numbers, which is first + 1.
+ */
