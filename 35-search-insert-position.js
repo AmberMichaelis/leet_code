@@ -21,18 +21,21 @@
  * @param {number} target
  * @return {number}
  */
- var searchInsert = function(nums, target) {
+var searchInsert = function (nums, target) {
     if (nums[nums.length - 1] < target) return nums.length;
-    for (let num = 0; num < nums.length - 1; num++) {
-        if (nums[num] >= target) {
-            return num
+    for (let i = 0; i < nums.length - 1; i++) {
+        if (nums[i] >= target) {
+            return i
         };
     };
     return nums.length - 1;
 };
 
-console.log(searchInsert([1,3,5,6], 1)); // 0
-console.log(searchInsert([1,3,5,6], 2)); // 1
-console.log(searchInsert([1,3,5,6], 5)); // 2
-console.log(searchInsert([1,3,5,6], 6)); // 3
-console.log(searchInsert([1,3,5,6], 7)); // 4
+/* Explanation:
+ * Check if last value in nums is less than target.
+ * If so, return nums.length.
+ * Loop through all of the values in nums.
+ * Check if each value is greater than or equal to target.
+ * If so, return the index of that value.
+ * After looping through all of nums, return nums.length - 1.
+ */
