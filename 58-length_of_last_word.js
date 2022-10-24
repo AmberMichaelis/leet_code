@@ -16,22 +16,25 @@
  * Explanation: The last word is "joyboy" with length 6.
  * 
  */
-
+/**
+ * @param {string} s
+ * @return {number}
+ */
 var lengthOfLastWord = function (s) {
-    array = s.split(" ")
-    lastWord = array[array.length - 1]
-    if (lastWord.length === 0) {
-        for (let i = array.length - 1; i >= 0; i--) {
-            if (array[i].length !== 0) {
-            lastWord = array[i];
-            break;
-            }
-        }
+    let trimmed = s.trim();
+    if (trimmed.length === 0) return 0;
+    for (let i = trimmed.length - 1; i >= 0; i--) {
+        if (trimmed[i] === " ") return trimmed.length - 1 - i;
     }
-    return lastWord.length
-};
+    return trimmed.length;
+}
 
-console.log(lengthOfLastWord("Hello World")); // 5
-console.log(lengthOfLastWord("   fly me   to   the moon  ")); // 4
-console.log(lengthOfLastWord("luffy is still joyboy")); // 6
-console.log(lengthOfLastWord(" ")); // 0
+/* Explanation:
+ * Create a variable with the trimmed string called trimmed.
+ * Check if the length of trimmed is 0.
+ * If so, return 0
+ * Loop backwards through the characters of trimmed.
+ * Check if any character is equal to a space.
+ * If so, return the distance between the space and the end of the string.
+ * After looping through all of trimmed, return the length of trimmed.
+ */
