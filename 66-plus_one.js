@@ -14,6 +14,11 @@
  * Example 3:
  * Input: digits = [9]
  * Output: [1,0]
+ * 
+ * Constraints:
+ * 1 <= digits.length <= 100
+ * 0 <= digits[i] <= 9
+ * digits does not contain any leading 0's.
  */
 
 /**
@@ -21,19 +26,18 @@
  * @return {number[]}
  */
 var plusOne = function (digits) {
-    let lastDigitIndex = digits.length - 1
-    if (digits[lastDigitIndex] !== 9) {
-        digits[lastDigitIndex]++
+    let index = digits.length - 1
+    if (digits[index] !== 9) {
+        digits[index]++
     } else {
-        while (digits[lastDigitIndex] === 9) {
-            digits[lastDigitIndex] = 0
-            lastDigitIndex--
-            if (digits[lastDigitIndex] !== 9) {
-                if (lastDigitIndex === -1) {
+        while (digits[index] === 9) {
+            digits[index] = 0
+            index--
+            if (digits[index] !== 9) {
+                if (index === -1) {
                     digits.unshift(1)
                 } else {
-                    let increment = digits[lastDigitIndex] + 1
-                    digits[lastDigitIndex] = increment
+                    digits[index]++
                     break;
                 }
             }
@@ -42,10 +46,15 @@ var plusOne = function (digits) {
     return digits
 };
 
-console.log(plusOne([1, 2, 3])) // [1,2,4]
-console.log(plusOne([4, 3, 2, 1])) // [4,3,2,2]
-console.log(plusOne([9])) // [1,0]
-console.log(plusOne([3, 9, 9, 9])) // [4,0,0,0]
-console.log(plusOne([8, 9, 9, 9])) // [9,0,0,0]
-console.log(plusOne([9, 9, 9])) // [1,0,0,0]
-console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3])) // [6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,4]
+/* Explanation:
+ * Create a variable that points to the last digit.
+ * Check if the last digit does not equal 9.
+ * If so, add 1 to that digit and return digits.
+ * Otherwise, loop through all the digits backwards as long as the current digit equals 9.
+ * Set each digit equal to 0.
+ * Decrement the pointer to the previous digit.
+ * Check if that digit does not equal 9.
+ * If so, check if the pointer equals -1.
+ * If so, insert a 1 at the beginning of the digits array and return digits.
+ * Otherwise, increment the digit and return digits.
+ */
