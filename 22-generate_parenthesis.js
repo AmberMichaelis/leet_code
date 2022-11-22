@@ -16,24 +16,22 @@
  * @param {number} n
  * @return {string[]}
  */
- const generateParentheses = (n) => {
-    const result = [];
-    breathFirstSearch("", 0, 0);
-    return result;
-    function breathFirstSearch(str, left, right) {
-      if (left === n && right === n) {
-        result.push(str);
-        return;
-      }
-      if (left !== n) {
-        breathFirstSearch(str + "(", left + 1, right);
-      }
-      if (left > right) {
-        breathFirstSearch(str + ")", left, right + 1);
-      }
-    }
+ var generateParenthesis = function(n) {
+  var res = [];
+  if (n < 1) return res;
+  generate(res, '', n, n);
+  return res;
+};
+
+var generate = function (res, str, ll, rr) {
+  if (ll || rr) {
+    if (rr > ll) generate(res, str + ')', ll, rr - 1);
+    if (ll) generate(res, str + '(', ll - 1, rr);
+  } else {
+    res.push(str);
   }
+};
 
   /* Explanation:
-   * https://medium.com/@chyanpin/solving-leetcodes-challenge-22-generate-parentheses-2ba613397c06
+   * https://baffinlee.com/leetcode-javascript/problem/generate-parentheses.html
    */ 
