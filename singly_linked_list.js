@@ -190,26 +190,26 @@ class SinglyLinkedList {
         }
     }
 
-    deleteDuplicates() {
-        // sets current node to be head; of list
-        let current = this.head;
-        // runs until we are at the end of the list
-        while (current !== null && current.next !== null) {
-            // checks to see if the current value and the next value are the same
-            if (current.value === current.next.value) {
-                // skips over the duplicate and the next value becomes 2x next
-                current.next = current.next.next
-                this.size--;
-                // current value and the next value are not the same
-            } else {
-                // moves to the next node on the list to run through the while again
-                current = current.next
-            }
+    // deleteDuplicates() {
+    //     // sets current node to be head; of list
+    //     let current = this.head;
+    //     // runs until we are at the end of the list
+    //     while (current !== null && current.next !== null) {
+    //         // checks to see if the current value and the next value are the same
+    //         if (current.value === current.next.value) {
+    //             // skips over the duplicate and the next value becomes 2x next
+    //             current.next = current.next.next
+    //             this.size--;
+    //             // current value and the next value are not the same
+    //         } else {
+    //             // moves to the next node on the list to run through the while again
+    //             current = current.next
+    //         }
 
-        }
-        // returns the linked list with no duplicates
-        return this;
-    };
+    //     }
+    //     // returns the linked list with no duplicates
+    //     return this;
+    // };
 
     mergeTwoLists(l1, l2) {
         if (!l1 || l1.size === 0) return l2;
