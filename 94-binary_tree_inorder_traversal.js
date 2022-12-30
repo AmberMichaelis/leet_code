@@ -65,3 +65,15 @@ var inorderTraversal = function (root) {
     }
     return result;
 }
+
+/* Explanation:
+ * 1: Create empty array variables, stack and result
+ * 2: While there is a root or the stack array is not empty,
+ *      3: While there is a root
+ *          4: Push the root into the stack <- smallest values will end up at the top of the stack
+ *          5: Reassign root to be its left child, and repeat while loop from step 3
+ *      6: Reassign root to be the last element in the stack array (which will be the smallest value)
+ *      7: Push root's value into result array
+ *      8: Reassign root to be its right child, and then repeat while loop from step 2
+ * 9: When there are no more roots and the stack array is empty, return result
+ */
