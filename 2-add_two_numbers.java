@@ -1,0 +1,71 @@
+/* You are given two non-empty linked lists representing two non-negative integers. 
+ * The digits are stored in reverse order, and each of their nodes contains a single digit. 
+ * Add the two numbers and return the sum as a linked list.
+ * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+ * 
+ * Example 1:
+ * Input: l1 = [2,4,3], l2 = [5,6,4]
+ * Output: [7,0,8]
+ * Explanation: 342 + 465 = 807.
+ * 
+ * Example 2:
+ * Input: l1 = [0], l2 = [0]
+ * Output: [0]
+ * 
+ * Example 3:
+ * Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+ * Output: [8,9,9,9,0,0,0,1]
+ * 
+ * Constraints:
+ * The number of nodes in each linked list is in the range [1, 100].
+ * 0 <= Node.val <= 9
+ * It is guaranteed that the list represents a number that does not have leading zeros.
+ */
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public class ListNode {
+        int val;
+        ListNode next;
+        ListNode() {}
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = 0; // determines the value to be carried when adding digits
+        ListNode current = new ListNode(-1); // creates a new linked list with the head as -1
+        ListNode head = current; // points to the head of the linked list
+
+        while (l1 != null || l2 != null || carry == 1) {
+            int l1Val = (l1 != null) ? l1.val : 0; // gets value from l1
+            int l2Val = (l2 != null) ? l2.val : 0; // gets value from l2
+
+            int nextDigit = (l1Val + l2Val + carry) % 10; // gets the right most digit from the total
+            current.next = new ListNode(nextDigit); // adds the digit to the linked list
+            current = current.next; // moves pointer to newly created node
+
+            carry = (int)Math.floor((l1Val + l2Val + carry) / 10); // calculates the new value to be carried
+
+            l1 = (l1 != null) ? l1.next : null; // removes used l1 node
+            l2 = (l2 != null) ? l2.next : null; // removes used l2 node
+        }
+        return head.next; // returns linked list with sum excluding the original -1 head
+    }
+}
