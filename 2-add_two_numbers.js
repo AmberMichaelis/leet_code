@@ -44,10 +44,10 @@ var addTwoNumbers = function (l1, l2) {
         let l2Val = l2 ? l2.val : 0; // gets value from list2
 
         let nextDigit = (l1Val + l2Val + carry) % 10; // gets the right most digit of total
-        current.next = new ListNode(nextDigit); // adds the total as a new node in list
+        current.next = new ListNode(nextDigit); // adds the digit as a new node in list
         current = current.next; // points to newly created node
 
-        carry = Math.floor((l1Val + l2Val + carry) / 10); // resets carry value
+        carry = Math.floor((l1Val + l2Val + carry) / 10); // calculates new carry value
 
         l1 = l1 ? l1.next : null;
         l2 = l2 ? l2.next : null;
