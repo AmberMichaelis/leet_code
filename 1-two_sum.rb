@@ -18,7 +18,7 @@
 
 # @param {String} s
 # @return {Integer}
-def length_of_longest_substring(s)
+def two_sum(nums, target)
     checked = {}
     nums.each_with_index do |value, i|
         diff = target - value
@@ -29,5 +29,4 @@ def length_of_longest_substring(s)
             checked[value] = i
         end
     end
-    
 end
